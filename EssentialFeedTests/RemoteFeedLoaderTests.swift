@@ -12,15 +12,14 @@ final class RemoteFeedLoaderTests: XCTestCase {
 
     func test_init_doesNotRequestDataFromURL() {
         
-        let (_, client) = makeSUT()
+        let (_, client, _) = makeSUT()
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
     func test_load_requestsDataFromURL() {
         // MARK: - GIVEN
-        let spyURL: URL = URL(string: "https://gui.com")!
-        let (sut, client) = makeSUT()
+        let (sut, client, spyURL) = makeSUT()
         
         // MARK: - WHEN
         sut.load(requestedURL: spyURL)
@@ -31,8 +30,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
     
     func test_loadTwice_requestsDataFromURLTwice() {
         // MARK: - GIVEN
-        let spyURL: URL = URL(string: "https://gui.com")!
-        let (sut, client) = makeSUT()
+        let (sut, client, spyURL) = makeSUT()
         
         // MARK: - WHEN
         sut.load(requestedURL: spyURL)
@@ -43,21 +41,39 @@ final class RemoteFeedLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs.count, 2)
     }
     
+    func test_load_deliversErrorOnClientError() {
+        // MARK: - GIVEN
+        let (sut, client, spyURL) = makeSUT()
+        client.errorToBeReturned = NSError(domain: "Test", code: 0)
+        var capturedError: RemoteFeedLoader.Error?
+        
+        // MARK: - WHEN
+        sut.load(requestedURL: spyURL) { error in capturedError = error }
+        
+        // MARK: - THEN
+        XCTAssertEqual(capturedError, .conectivity)
+    }
+    
     //MARK: - HELPERS
     
-    private func makeSUT() -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+    private func makeSUT() -> (sut: RemoteFeedLoader, client: HTTPClientSpy, url: URL) {
+        let url = URL(string: "https://gui.com")!
         let clientSpy = HTTPClientSpy()
         let sut = RemoteFeedLoader(client: clientSpy)
-        return (sut, clientSpy)
+        return (sut, clientSpy, url)
     }
     
     private class HTTPClientSpy: HTTPClient {
         var requestedURL: URL?
         var requestedURLs: [URL?] = []
+        var errorToBeReturned: Error?
         
-        func get(from url: URL) {
+        func get(from url: URL, completion: @escaping (Error) -> Void) {
             requestedURL = url
             requestedURLs.append(url)
+            if let errorToBeReturned {
+                completion(errorToBeReturned)
+            }
         }
     }
     
