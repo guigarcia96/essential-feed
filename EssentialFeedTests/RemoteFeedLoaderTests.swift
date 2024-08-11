@@ -9,7 +9,7 @@ import XCTest
 @testable import EssentialFeed
 
 final class RemoteFeedLoaderTests: XCTestCase {
-
+    
     func test_init_doesNotRequestDataFromURL() {
         
         let (_, client, _) = makeSUT()
@@ -58,15 +58,18 @@ final class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOnNon200HTTPResponse() {
         // MARK: - GIVEN
         let (sut, client, spyURL) = makeSUT()
-        let clientError = NSError(domain: "Test", code: 0)
-        var capturedErrors = [RemoteFeedLoader.Error]()
         
         // MARK: - WHEN
-        sut.load(requestedURL: spyURL) { capturedErrors.append($0) }
-        client.complete(withStatusCode: 400, at: 0)
+        let samples = [199, 201, 300, 400, 500]
         
-        // MARK: - THEN
-        XCTAssertEqual(capturedErrors, [.invalidData])
+        samples.enumerated().forEach { index, code in
+            var capturedErrors = [RemoteFeedLoader.Error]()
+            sut.load(requestedURL: spyURL) { capturedErrors.append($0) }
+            client.complete(withStatusCode: code, at: index)
+            
+            // MARK: - THEN
+            XCTAssertEqual(capturedErrors, [.invalidData])
+        }
     }
     
     //MARK: - HELPERS
