@@ -22,7 +22,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client, spyURL) = makeSUT()
         
         // MARK: - WHEN
-        sut.load(requestedURL: spyURL)
+        sut.load(requestedURL: spyURL) {_ in }
         
         // MARK: - THEN
         XCTAssertEqual(client.requestedURLs, [spyURL])
@@ -33,8 +33,8 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client, spyURL) = makeSUT()
         
         // MARK: - WHEN
-        sut.load(requestedURL: spyURL)
-        sut.load(requestedURL: spyURL)
+        sut.load(requestedURL: spyURL) {_ in }
+        sut.load(requestedURL: spyURL) {_ in }
         
         // MARK: - THEN
         XCTAssertEqual(client.requestedURLs, [spyURL, spyURL])
