@@ -6,23 +6,7 @@
 //
 
 import XCTest
-
-class RemoteFeedLoader {
-    
-    let client: HTTPClient
-    
-    init(client: HTTPClient) {
-        self.client = client
-    }
-    
-    func load(requestedURL: URL) {
-        client.get(from: requestedURL)
-    }
-}
-
-protocol HTTPClient {
-    func get(from url: URL)
-}
+@testable import EssentialFeed
 
 final class RemoteFeedLoaderTests: XCTestCase {
 
@@ -33,7 +17,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         XCTAssertNil(client.requestedURL)
     }
     
-    func test_load_requestDataFromURL() {
+    func test_load_requestsDataFromURL() {
         // MARK: - GIVEN
         let spyURL: URL = URL(string: "https://gui.com")!
         let (sut, client) = makeSUT()
