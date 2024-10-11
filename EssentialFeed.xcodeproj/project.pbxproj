@@ -46,6 +46,7 @@
 		9560BAB02CB2E9FF00473693 /* FeedItemsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemsMapper.swift; sourceTree = "<group>"; };
 		9560BAB32CB4B94F00473693 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		956B0F0A2CB77E4300B61BC8 /* CI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI.xctestplan; sourceTree = "<group>"; };
+		958827D62CB8ADBB00510A0D /* EssentialFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EssentialFeed.xctestplan; sourceTree = "<group>"; };
 		95BADB9B2C68165100B0D86B /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BADBA32C68165100B0D86B /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BADBA82C68165100B0D86B /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 		95BADB912C68165000B0D86B = {
 			isa = PBXGroup;
 			children = (
+				958827D62CB8ADBB00510A0D /* EssentialFeed.xctestplan */,
 				956B0F0A2CB77E4300B61BC8 /* CI.xctestplan */,
 				95BADB9D2C68165100B0D86B /* EssentialFeed */,
 				95BADBA72C68165100B0D86B /* EssentialFeedTests */,
