@@ -3,11 +3,9 @@ import EssentialFeed
 
 class LoadFeedFromCacheUseCaseTests: XCTestCase {
     
-    func test_init() {
-        func test_init_doesNotMessageStoreUponCreation() {
-            let (_, store) = makeSUT()
-            XCTAssertEqual(store.receivedMessages, [])
-        }
+    func test_init_doesNotMessageStoreUponCreation() {
+        let (_, store) = makeSUT()
+        XCTAssertEqual(store.receivedMessages, [])
     }
     
     func test_load_requestsCacheRetrieval() {
