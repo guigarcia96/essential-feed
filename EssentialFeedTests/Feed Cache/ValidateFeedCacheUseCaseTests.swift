@@ -47,33 +47,4 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         trackForMemoryLeaks(sut,file: file, line: line)
         return (sut, store)
     }
-    
-    private func anyNSError() -> NSError {
-        return NSError(domain: "anyError", code: 0)
-    }
-    
-    private func uniqueImage() -> FeedImage {
-        return FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
-    }
-    
-    private func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
-        let models = [uniqueImage(), uniqueImage()]
-        let localItems = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
-        return (models, localItems)
-    }
-    
-    private func anyURL() -> URL {
-        return URL(string: "https://test.com")!
-    }
 }
-
-private extension Date {
-    func adding(days: Int) -> Self {
-        Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
-    }
-    
-    func adding(seconds: TimeInterval) -> Self {
-        self + seconds
-    }
-}
-
