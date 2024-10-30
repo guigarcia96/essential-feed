@@ -29,7 +29,7 @@ class CodableFeedStore {
         }
     }
 
-    private let storeURL: URL 
+    private let storeURL: URL
 
     init(storeURL: URL) {
         self.storeURL = storeURL
@@ -100,7 +100,7 @@ class CodableFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
 
-    func test_retrieveAfterInsertintToEmptyCache_deliversInsertedValues() {
+    func test_retrieveAfterInsertingToEmptyCache_deliversInsertedValues() {
         let sut = makeSUT()
         let timestamp = Date()
         let feed = uniqueImageFeed().local
@@ -115,6 +115,33 @@ class CodableFeedStoreTests: XCTestCase {
                     XCTAssertEqual(retrievedTimestamp, timestamp)
                 default:
                     XCTFail("Expected found result with feed \(feed) and timestamp \(timestamp), got \(retrieveResult) instead")
+                }
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
+        let sut = makeSUT()
+        let timestamp = Date()
+        let feed = uniqueImageFeed().local
+        let exp = expectation(description: "Wait for cache retrieval")
+        
+        sut.insert(feed, timestamp: timestamp) { insertionError in
+        XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
+            sut.retrieve { firstResult in
+                sut.retrieve { secondResult in
+                    switch (firstResult, secondResult) {
+                    case let(.found(firstFound), .found(secondFound)):
+                        XCTAssertEqual(firstFound.feed, feed)
+                        XCTAssertEqual(firstFound.timestamp, timestamp)
+    
+                        XCTAssertEqual(secondFound.feed, feed)
+                        XCTAssertEqual(secondFound.timestamp, timestamp)
+                    default:
+                        XCTFail("Expected retrieving twice from non-empty cache to deliver same feed and timestamp, got \(firstResult) and \(secondResult) instead")
+                    }
                 }
             }
             exp.fulfill()
