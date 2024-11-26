@@ -9,7 +9,7 @@ public final class RemoteFeedLoader: FeedLoader {
         case invalidData
     }
     
-    public typealias Result = LoadFeedResult
+    public typealias Result = FeedLoader.Result
     
     public init(url: URL, client: HTTPClient) {
         self.url = url
@@ -22,11 +22,25 @@ public final class RemoteFeedLoader: FeedLoader {
             
             switch result {
             case let .success(data, response):
-                let result  = FeedItemsMapper.map(data, from: response)
-                completion(result)
+                completion(RemoteFeedLoader.map(data, from: response))
             case .failure:
                 completion(.failure(Error.conectivity))
             }
         }
+    }
+    
+    private static func map(_ data: Data, from response: HTTPURLResponse) -> Result {
+        do {
+            let items = try FeedItemsMapper.map(data, from: response)
+            return .success(items.toModels())
+        } catch {
+            return .failure(error)
+        }
+    }
+}
+
+private extension Array where Element == RemoteFeedItem {
+    func toModels() -> [FeedImage] {
+        map { FeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.image) }
     }
 }

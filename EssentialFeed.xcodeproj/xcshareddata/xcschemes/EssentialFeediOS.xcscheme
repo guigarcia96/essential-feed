@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "95BADB9A2C68165100B0D86B"
-               BuildableName = "EssentialFeed.framework"
-               BlueprintName = "EssentialFeed"
+               BlueprintIdentifier = "9590E5D72CE43C35002C25C1"
+               BuildableName = "EssentialFeediOS.framework"
+               BlueprintName = "EssentialFeediOS"
                ReferencedContainer = "container:EssentialFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,10 +30,22 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:CI.xctestplan"
+            reference = "container:EssentialFeediOS.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9590E5DE2CE43C36002C25C1"
+               BuildableName = "EssentialFeediOSTests.xctest"
+               BlueprintName = "EssentialFeediOSTests"
+               ReferencedContainer = "container:EssentialFeed.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -55,9 +67,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "95BADB9A2C68165100B0D86B"
-            BuildableName = "EssentialFeed.framework"
-            BlueprintName = "EssentialFeed"
+            BlueprintIdentifier = "9590E5D72CE43C35002C25C1"
+            BuildableName = "EssentialFeediOS.framework"
+            BlueprintName = "EssentialFeediOS"
             ReferencedContainer = "container:EssentialFeed.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
